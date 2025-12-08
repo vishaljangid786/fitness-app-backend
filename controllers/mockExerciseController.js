@@ -1,0 +1,409 @@
+// Mock exercise data - use this if you don't have MongoDB set up yet
+const mockExercises = [
+  {
+    _id: "1",
+    name: "Push-ups",
+    description:
+      "A classic bodyweight exercise that targets the chest, shoulders, and triceps.",
+    category: "Strength",
+    muscleGroups: ["Chest", "Shoulders", "Triceps", "Core"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Start in a plank position with hands slightly wider than shoulder-width",
+      "Lower your body until your chest nearly touches the floor",
+      "Push back up to the starting position",
+      "Keep your core engaged throughout the movement",
+    ],
+    caloriesPerMinute: 8,
+  },
+  {
+    _id: "2",
+    name: "Squats",
+    description:
+      "A fundamental lower body exercise that targets the quadriceps, glutes, and hamstrings.",
+    category: "Strength",
+    muscleGroups: ["Quadriceps", "Glutes", "Hamstrings", "Calves"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Stand with feet shoulder-width apart",
+      "Lower your body as if sitting back into a chair",
+      "Keep your knees behind your toes",
+      "Lower until thighs are parallel to the floor",
+      "Push through your heels to return to standing",
+    ],
+    caloriesPerMinute: 7,
+  },
+  {
+    _id: "3",
+    name: "Plank",
+    description:
+      "An isometric core exercise that strengthens the entire core and improves stability.",
+    category: "Strength",
+    muscleGroups: ["Core", "Shoulders", "Back"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Start in a push-up position",
+      "Lower onto your forearms",
+      "Keep your body in a straight line from head to heels",
+      "Hold the position while breathing normally",
+      "Engage your core throughout",
+    ],
+    caloriesPerMinute: 5,
+  },
+  {
+    _id: "4",
+    name: "Burpees",
+    description:
+      "A full-body exercise that combines a squat, push-up, and jump for maximum intensity.",
+    category: "Cardio",
+    muscleGroups: ["Full Body", "Core", "Legs", "Chest"],
+    equipment: ["None"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Start standing, then squat down and place hands on the floor",
+      "Jump feet back into a plank position",
+      "Perform a push-up",
+      "Jump feet back to squat position",
+      "Explosively jump up with arms overhead",
+    ],
+    caloriesPerMinute: 12,
+  },
+  {
+    _id: "5",
+    name: "Lunges",
+    description:
+      "A unilateral leg exercise that improves balance and targets each leg individually.",
+    category: "Strength",
+    muscleGroups: ["Quadriceps", "Glutes", "Hamstrings", "Calves"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Stand with feet hip-width apart",
+      "Step forward with one leg, lowering your hips",
+      "Bend both knees to 90 degrees",
+      "Keep your front knee above your ankle",
+      "Push back to starting position",
+      "Alternate legs",
+    ],
+    caloriesPerMinute: 6,
+  },
+  {
+    _id: "6",
+    name: "Mountain Climbers",
+    description:
+      "A dynamic cardio exercise that targets the core while improving cardiovascular fitness.",
+    category: "Cardio",
+    muscleGroups: ["Core", "Shoulders", "Legs"],
+    equipment: ["None"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Start in a plank position",
+      "Bring one knee toward your chest",
+      "Quickly switch legs in a running motion",
+      "Keep your core engaged and hips level",
+      "Maintain a steady pace",
+    ],
+    caloriesPerMinute: 10,
+  },
+  {
+    _id: "7",
+    name: "Deadlifts",
+    description:
+      "A compound exercise that targets the posterior chain including glutes, hamstrings, and back.",
+    category: "Strength",
+    muscleGroups: ["Glutes", "Hamstrings", "Back", "Core"],
+    equipment: ["Barbell", "Dumbbells"],
+    difficulty: "Advanced",
+    instructions: [
+      "Stand with feet hip-width apart, bar over mid-foot",
+      "Hinge at hips and bend knees slightly",
+      "Grip the bar with hands shoulder-width apart",
+      "Keep back straight and core engaged",
+      "Drive through heels to stand up",
+      "Lower the bar with control",
+    ],
+    caloriesPerMinute: 9,
+  },
+  {
+    _id: "8",
+    name: "Pull-ups",
+    description:
+      "An upper body strength exercise that targets the back, biceps, and shoulders.",
+    category: "Strength",
+    muscleGroups: ["Back", "Biceps", "Shoulders", "Core"],
+    equipment: ["Pull-up Bar"],
+    difficulty: "Advanced",
+    instructions: [
+      "Hang from a pull-up bar with palms facing away",
+      "Engage your core and keep legs straight",
+      "Pull your body up until chin clears the bar",
+      "Lower with control to full arm extension",
+      "Keep your body stable throughout",
+    ],
+    caloriesPerMinute: 8,
+  },
+  {
+    _id: "9",
+    name: "Jumping Jacks",
+    description:
+      "A classic cardio exercise that improves cardiovascular fitness and coordination.",
+    category: "Cardio",
+    muscleGroups: ["Full Body", "Legs", "Shoulders"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Stand with feet together and arms at sides",
+      "Jump while spreading legs shoulder-width apart",
+      "Simultaneously raise arms overhead",
+      "Jump back to starting position",
+      "Maintain a steady rhythm",
+    ],
+    caloriesPerMinute: 8,
+  },
+  {
+    _id: "10",
+    name: "Bench Press",
+    description:
+      "A compound upper body exercise primarily targeting the chest, shoulders, and triceps.",
+    category: "Strength",
+    muscleGroups: ["Chest", "Shoulders", "Triceps"],
+    equipment: ["Barbell", "Bench"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Lie on bench with feet flat on floor",
+      "Grip bar slightly wider than shoulder-width",
+      "Lower bar to chest with control",
+      "Press bar up until arms are fully extended",
+      "Keep core engaged and back flat on bench",
+    ],
+    caloriesPerMinute: 7,
+  },
+  {
+    _id: "11",
+    name: "Running",
+    description:
+      "A high-intensity cardio exercise that improves cardiovascular health and burns calories.",
+    category: "Cardio",
+    muscleGroups: ["Legs", "Core", "Cardiovascular"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Start with a warm-up walk",
+      "Maintain an upright posture",
+      "Land on mid-foot, not heel",
+      "Keep arms relaxed and swinging naturally",
+      "Breathe rhythmically",
+      "Cool down with a walk",
+    ],
+    caloriesPerMinute: 12,
+  },
+  {
+    _id: "12",
+    name: "Yoga Downward Dog",
+    description:
+      "A foundational yoga pose that stretches the entire body and builds strength.",
+    category: "Flexibility",
+    muscleGroups: ["Shoulders", "Hamstrings", "Calves", "Core"],
+    equipment: ["Yoga Mat"],
+    difficulty: "Beginner",
+    instructions: [
+      "Start on hands and knees",
+      "Tuck toes and lift hips up and back",
+      "Form an inverted V shape",
+      "Press hands into mat and lengthen spine",
+      "Hold and breathe deeply",
+    ],
+    caloriesPerMinute: 3,
+  },
+  {
+    _id: "13",
+    name: "Bicep Curls",
+    description:
+      "An isolation exercise that targets the biceps for arm strength and definition.",
+    category: "Strength",
+    muscleGroups: ["Biceps", "Forearms"],
+    equipment: ["Dumbbells", "Barbell"],
+    difficulty: "Beginner",
+    instructions: [
+      "Stand with feet shoulder-width apart",
+      "Hold weights with arms extended",
+      "Curl weights toward shoulders",
+      "Squeeze biceps at the top",
+      "Lower with control",
+      "Keep elbows stationary",
+    ],
+    caloriesPerMinute: 4,
+  },
+  {
+    _id: "14",
+    name: "Russian Twists",
+    description:
+      "A core exercise that targets the obliques and improves rotational strength.",
+    category: "Strength",
+    muscleGroups: ["Core", "Obliques"],
+    equipment: ["None"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Sit on floor with knees bent",
+      "Lean back slightly, keeping back straight",
+      "Rotate torso from side to side",
+      "Keep feet off ground for added difficulty",
+      "Maintain controlled movement",
+    ],
+    caloriesPerMinute: 6,
+  },
+  {
+    _id: "15",
+    name: "High Knees",
+    description:
+      "A dynamic cardio exercise that improves coordination and cardiovascular fitness.",
+    category: "Cardio",
+    muscleGroups: ["Legs", "Core", "Hip Flexors"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Stand with feet hip-width apart",
+      "Run in place, bringing knees up high",
+      "Aim to bring knees to hip level",
+      "Pump arms naturally",
+      "Maintain a quick, steady pace",
+    ],
+    caloriesPerMinute: 9,
+  },
+  {
+    _id: "16",
+    name: "Dips",
+    description:
+      "A bodyweight exercise that targets the triceps, shoulders, and chest.",
+    category: "Strength",
+    muscleGroups: ["Triceps", "Shoulders", "Chest"],
+    equipment: ["Parallel Bars", "Bench"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Support body on parallel bars or bench edge",
+      "Lower body by bending elbows",
+      "Keep elbows close to body",
+      "Lower until shoulders are below elbows",
+      "Push back up to starting position",
+    ],
+    caloriesPerMinute: 7,
+  },
+  {
+    _id: "17",
+    name: "Leg Raises",
+    description:
+      "An isolation exercise that targets the lower abdominals and hip flexors.",
+    category: "Strength",
+    muscleGroups: ["Core", "Hip Flexors"],
+    equipment: ["None"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Lie flat on back with hands under glutes",
+      "Keep legs straight and together",
+      "Lift legs up to 90 degrees",
+      "Lower with control without touching floor",
+      "Keep lower back pressed to floor",
+    ],
+    caloriesPerMinute: 5,
+  },
+  {
+    _id: "18",
+    name: "Jump Rope",
+    description:
+      "A high-intensity cardio exercise that improves coordination and cardiovascular fitness.",
+    category: "Cardio",
+    muscleGroups: ["Legs", "Calves", "Shoulders", "Core"],
+    equipment: ["Jump Rope"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Hold rope handles at hip level",
+      "Jump with both feet together",
+      "Keep jumps small and quick",
+      "Land softly on balls of feet",
+      "Maintain steady rhythm",
+    ],
+    caloriesPerMinute: 11,
+  },
+  {
+    _id: "19",
+    name: "Shoulder Press",
+    description:
+      "An upper body exercise that targets the shoulders and triceps.",
+    category: "Strength",
+    muscleGroups: ["Shoulders", "Triceps", "Core"],
+    equipment: ["Dumbbells", "Barbell"],
+    difficulty: "Intermediate",
+    instructions: [
+      "Stand with feet shoulder-width apart",
+      "Hold weights at shoulder height",
+      "Press weights overhead",
+      "Keep core engaged",
+      "Lower with control",
+      "Avoid arching back",
+    ],
+    caloriesPerMinute: 6,
+  },
+  {
+    _id: "20",
+    name: "Calf Raises",
+    description:
+      "An isolation exercise that targets the calf muscles for lower leg strength.",
+    category: "Strength",
+    muscleGroups: ["Calves"],
+    equipment: ["None"],
+    difficulty: "Beginner",
+    instructions: [
+      "Stand with feet hip-width apart",
+      "Rise up onto balls of feet",
+      "Squeeze calves at the top",
+      "Lower with control",
+      "Keep knees straight throughout",
+    ],
+    caloriesPerMinute: 3,
+  },
+];
+
+// Mock controller functions
+exports.getAllExercises = async (req, res) => {
+  try {
+    // Simulate async delay
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    res.status(200).json({
+      success: true,
+      count: mockExercises.length,
+      data: mockExercises,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+exports.getExerciseById = async (req, res) => {
+  try {
+    const exercise = mockExercises.find((ex) => ex._id === req.params.id);
+
+    if (!exercise) {
+      return res.status(404).json({
+        success: false,
+        error: "Exercise not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: exercise,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
