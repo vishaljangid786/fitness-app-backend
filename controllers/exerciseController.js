@@ -49,81 +49,57 @@ exports.getExerciseById = async (req, res) => {
 // Create exercise
 exports.createExercise = async (req, res) => {
   try {
+
     let imageUrl = "";
 
-    // Upload image to Cloudinary if file is provided
     if (req.file) {
-      try {
-        const uploadResult = await uploadToCloudinary(
-          req.file.buffer,
-          "exercises",
-          `exercise-${Date.now()}`
-        );
-        imageUrl = uploadResult.secure_url;
-      } catch (uploadError) {
-        return res.status(400).json({
-          success: false,
-          error: `Image upload failed: ${uploadError.message}`,
-        });
-      }
+      const uploadResult = await uploadToCloudinary(
+        req.file.buffer,
+        "exercises",
+        `exercise-${Date.now()}`
+      );
+      imageUrl = uploadResult.secure_url;
     }
 
-    // Create exercise with image URL
-    const exerciseData = {
-      ...req.body,
-      imageUrl: imageUrl || req.body.imageUrl || "",
+    const parseArrayField = (field) => {
+      if (!field) return [];
+      try {
+        const parsed = JSON.parse(field);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return field
+          .split(",")
+          .map((v) => v.trim())
+          .filter(Boolean);
+      }
     };
 
-    // Parse JSON fields if they're strings (from form-data)
-    if (typeof exerciseData.muscleGroups === "string") {
-      try {
-        exerciseData.muscleGroups = JSON.parse(exerciseData.muscleGroups);
-      } catch (e) {
-        exerciseData.muscleGroups = exerciseData.muscleGroups
-          .split(",")
-          .map((item) => item.trim());
-      }
-    }
-
-    if (typeof exerciseData.equipment === "string") {
-      try {
-        exerciseData.equipment = JSON.parse(exerciseData.equipment);
-      } catch (e) {
-        exerciseData.equipment = exerciseData.equipment
-          .split(",")
-          .map((item) => item.trim());
-      }
-    }
-
-    if (typeof exerciseData.instructions === "string") {
-      try {
-        exerciseData.instructions = JSON.parse(exerciseData.instructions);
-      } catch (e) {
-        exerciseData.instructions = exerciseData.instructions
-          .split(",")
-          .map((item) => item.trim());
-      }
-    }
-
-    if (
-      exerciseData.caloriesPerMinute &&
-      typeof exerciseData.caloriesPerMinute === "string"
-    ) {
-      exerciseData.caloriesPerMinute = parseInt(exerciseData.caloriesPerMinute);
-    }
+    const exerciseData = {
+      ...req.body,
+      imageUrl,
+      muscleGroups: parseArrayField(req.body.muscleGroups),
+      equipment: parseArrayField(req.body.equipment),
+      instructions: parseArrayField(req.body.instructions),
+      caloriesPerMinute: isNaN(parseInt(req.body.caloriesPerMinute))
+        ? 0
+        : parseInt(req.body.caloriesPerMinute),
+    };
 
     const exercise = await Exercise.create(exerciseData);
+
     res.status(201).json({
       success: true,
       data: exercise,
     });
   } catch (error) {
+    console.error("CREATE ERROR:", error);
     res.status(400).json({
       success: false,
       error: error.message,
     });
   }
 };
+
 
 // Update exercise
 exports.updateExercise = async (req, res) => {
