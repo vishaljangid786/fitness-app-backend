@@ -20,6 +20,9 @@ const workoutExerciseSchema = new mongoose.Schema(
 
 const workoutSchema = new mongoose.Schema(
   {
+    userId:{
+      type:String,
+    },
     dateTime: { type: Date, default: Date.now },
     duration: { type: Number, default: 0 }, // seconds
     notes: { type: String, default: "" },

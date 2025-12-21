@@ -27,10 +27,20 @@ exports.getWorkoutById = async (req, res) => {
   }
 };
 
+exports.getWorkoutByUserId = async (req, res) => {
+  try {
+    const workouts = await Workout.find({ userId: req.params.id });
+    res.status(200).json({ success: true, data: workouts });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
 // Create a workout
 exports.createWorkout = async (req, res) => {
   try {
-    const { dateTime, duration, notes, exercises } = req.body;
+    const { dateTime, duration, notes, exercises, userId } = req.body;
 
     if (!Array.isArray(exercises) || exercises.length === 0) {
       return res
@@ -56,6 +66,7 @@ exports.createWorkout = async (req, res) => {
       duration: Number(duration) || 0,
       notes: notes || "",
       exercises: normalizedExercises,
+      userId:userId || ""
     });
 
     res.status(201).json({ success: true, data: workout });
