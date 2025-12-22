@@ -27,6 +27,7 @@ const workoutSchema = new mongoose.Schema(
     duration: { type: Number, default: 0 }, // seconds
     notes: { type: String, default: "" },
     exercises: { type: [workoutExerciseSchema], default: [] },
+    likedBy: { type: [String], default: [] },
   },
   { timestamps: true }
 );

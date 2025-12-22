@@ -35,6 +35,60 @@ exports.getWorkoutByUserId = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+exports.toggleLikeWorkout = async (req, res) => {
+  try {
+    const workoutId = req.params.id;
+    const { userId } = req.body; // 👈 from frontend
+
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ success: false, error: "userId is required" });
+    }
+
+    const workout = await Workout.findById(workoutId);
+    if (!workout) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Workout not found" });
+    }
+
+    const hasLiked = workout.likedBy.includes(userId);
+
+    const update = hasLiked
+      ? { $pull: { likedBy: userId } } // UNLIKE
+      : { $addToSet: { likedBy: userId } }; // LIKE
+
+    const updatedWorkout = await Workout.findByIdAndUpdate(workoutId, update, {
+      new: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      liked: !hasLiked,
+      data: updatedWorkout,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+// GET /workouts/liked/:userId
+exports.getLikedWorkouts = async (req, res) => {
+  const { userId } = req.params;
+
+  if (!userId) {
+    return res.status(400).json({ success: false, error: "User ID required" });
+  }
+
+  try {
+    // Find all workouts where likedBy includes this userId
+    const likedWorkouts = await Workout.find({ likedBy: userId });
+
+    res.status(200).json({ success: true, data: likedWorkouts });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
 
 
 // Create a workout
