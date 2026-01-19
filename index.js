@@ -37,7 +37,7 @@ if (USE_MOCK_DATA) {
 
 // Health check route
 app.get("/", (req, res) => {
-  res.json({ message: "Fitness Backend API is running!" });
+  res.json({ message: "Fitness Backend API is running  !" });
 });
 
 // MongoDB connection (only if not using mock data)
