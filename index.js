@@ -6,7 +6,13 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "*", // ✅ sab domains allow
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"], // headers jo browser bhej sakta hai
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

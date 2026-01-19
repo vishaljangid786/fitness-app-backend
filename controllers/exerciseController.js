@@ -2,7 +2,6 @@ const Exercise = require("../models/Exercise");
 const {
   uploadToCloudinary,
   deleteFromCloudinary,
-  extractPublicId,
 } = require("../utils/cloudinaryUpload");
 
 // Get all exercises
@@ -223,20 +222,7 @@ exports.deleteExercise = async (req, res) => {
         error: "Exercise not found",
       });
     }
-
-    // Delete image from Cloudinary if it exists
-    if (exercise.imageUrl) {
-      const publicId = extractPublicId(exercise.imageUrl);
-      if (publicId) {
-        try {
-          await deleteFromCloudinary(publicId);
-        } catch (deleteError) {
-          console.error("Error deleting image from Cloudinary:", deleteError);
-          // Continue with exercise deletion even if image deletion fails
-        }
-      }
-    }
-
+    
     // Delete exercise from database
     await Exercise.findByIdAndDelete(req.params.id);
 
